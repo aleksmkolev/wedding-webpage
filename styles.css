@@ -1,0 +1,199 @@
+:root {
+  --bg: #e7ebe3;
+  --ink: #5c6456;
+  --soft: #7c8474;
+  --line: rgba(108, 118, 92, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 85% 50% at 50% -10%, rgba(255, 255, 255, 0.72), transparent 62%),
+    radial-gradient(ellipse 70% 40% at 50% 110%, rgba(176, 184, 158, 0.35), transparent 60%),
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: auto, auto, 28px 28px, 28px 28px;
+  font-family: Quicksand, "Segoe UI", sans-serif;
+}
+
+main {
+  width: min(680px, 100%);
+  padding:
+    calc(2rem + env(safe-area-inset-top))
+    calc(1.15rem + env(safe-area-inset-right))
+    calc(2.5rem + env(safe-area-inset-bottom))
+    calc(1.15rem + env(safe-area-inset-left));
+  text-align: center;
+}
+
+h1,
+p {
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+h1 {
+  font-size: clamp(2.05rem, 8.2vw, 3.35rem);
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+p {
+  margin-top: 0.85rem;
+  font-size: clamp(1.15rem, 4.4vw, 1.45rem);
+  line-height: 1.4;
+  color: var(--soft);
+}
+
+.photo {
+  position: relative;
+  width: min(420px, 100%);
+  margin: 2rem auto 0;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+body.is-ready .photo {
+  opacity: 1;
+}
+
+.photo-blur,
+.photo-main {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 2.25rem;
+}
+
+.photo-blur {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  object-fit: cover;
+  transform: scale(1.08);
+  filter: blur(18px);
+  -webkit-mask-image:
+    linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%),
+    linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%),
+    linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  mask-composite: intersect;
+}
+
+.photo-main {
+  position: relative;
+  z-index: 1;
+  -webkit-mask-image:
+    linear-gradient(to bottom, transparent 0%, #000 16%, #000 84%, transparent 100%),
+    linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to bottom, transparent 0%, #000 16%, #000 84%, transparent 100%),
+    linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  mask-composite: intersect;
+}
+
+@media (max-width: 700px) {
+  body {
+    min-height: 100svh;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100svh;
+    padding:
+      calc(1rem + env(safe-area-inset-top))
+      calc(1.25rem + env(safe-area-inset-right))
+      calc(1.15rem + env(safe-area-inset-bottom))
+      calc(1.25rem + env(safe-area-inset-left));
+  }
+
+  h1 {
+    font-size: clamp(1.7rem, 7.8vw, 2.2rem);
+    line-height: 1.15;
+  }
+
+  p {
+    margin-top: 0.5rem;
+    font-size: 1.125rem;
+  }
+
+  .photo {
+    width: min(100%, calc((100vh - 12.25rem) * 0.75));
+    width: min(100%, calc((100svh - 12.25rem) * 0.75));
+    margin-top: 0.9rem;
+  }
+
+  .photo-blur,
+  .photo-main {
+    border-radius: 1.6rem;
+  }
+
+  .photo-blur {
+    filter: blur(14px);
+    transform: scale(1.04);
+  }
+}
+
+@media (max-height: 520px) {
+  main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(1rem, 4vw, 2.25rem);
+    min-height: 100svh;
+    padding: 0.75rem 1.15rem;
+  }
+
+  .intro {
+    flex: 0 1 16rem;
+  }
+
+  h1 {
+    font-size: clamp(1.35rem, 4.2vw, 1.85rem);
+  }
+
+  p {
+    margin-top: 0.35rem;
+    font-size: 1rem;
+  }
+
+  .photo {
+    width: auto;
+    margin: 0;
+  }
+
+  .photo-main {
+    width: auto;
+    height: auto;
+    max-width: 46vw;
+    max-height: calc(100svh - 1.6rem);
+  }
+}
+
+@media (scripting: none) {
+  .photo {
+    opacity: 1;
+  }
+}
